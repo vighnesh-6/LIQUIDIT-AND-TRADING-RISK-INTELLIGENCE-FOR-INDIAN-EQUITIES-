@@ -1,0 +1,79 @@
+# Model Configuration
+# ML-Based Liquidity and Trading-Risk Intelligence for Indian Equities
+
+validation:
+  strategy: "expanding_window_walk_forward"
+  n_splits: 10
+  min_train_days: 490  # approximately 2 trading years
+  test_window_days: 60  # approximately 1 trading quarter
+  embargo_gap_days: 1
+  holdout_fraction_or_days: 250  # 1 year final test holdout reserved
+  random_state: 42
+
+models:
+  logistic_regression:
+    model_type: "baseline"
+    estimator: "sklearn.linear_model.LogisticRegression"
+    params:
+      penalty: "l2"
+      C: 1.0
+      solver: "lbfgs"
+      max_iter: 1000
+      class_weight: "balanced"
+      random_state: 42
+
+  random_forest:
+    model_type: "supervised_ensemble"
+    estimator: "sklearn.ensemble.RandomForestClassifier"
+    params:
+      n_estimators: 150
+      max_depth: 8
+      min_samples_leaf: 50
+      max_features: "sqrt"
+      class_weight: "balanced_subsample"
+      n_jobs: -1
+      random_state: 42
+
+  hist_gradient_boosting:
+    model_type: "supervised_boosting"
+    estimator: "sklearn.ensemble.HistGradientBoostingClassifier"
+    params:
+      max_iter: 200
+      max_leaf_nodes: 31
+      learning_rate: 0.05
+      l2_regularization: 0.1
+      class_weight: "balanced"
+      random_state: 42
+
+  isolation_forest:
+    model_type: "unsupervised_anomaly"
+    estimator: "sklearn.ensemble.IsolationForest"
+    params:
+      n_estimators: 100
+      contamination: 0.05
+      max_samples: "auto"
+      random_state: 42
+    feature_subset:
+      - "amihud_ratio"
+      - "amihud_z20"
+      - "volume_ratio"
+      - "volume_z20"
+      - "vol_20d"
+      - "vol_ratio_5_20"
+      - "daily_range"
+      - "range_z20"
+      - "overnight_gap_abs"
+      - "cs_spread_est"
+      - "nifty_vol_20d"
+      - "return_z20"
+
+evaluation:
+  primary_metric: "pr_auc"
+  tracked_metrics:
+    - "roc_auc"
+    - "pr_auc"
+    - "precision"
+    - "recall"
+    - "f1"
+    - "brier_score"
+  decision_threshold: 0.50  # calibrated via threshold tuning in Phase 8

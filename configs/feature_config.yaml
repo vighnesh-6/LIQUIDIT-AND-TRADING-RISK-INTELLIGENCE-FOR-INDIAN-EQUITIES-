@@ -1,0 +1,236 @@
+# Feature Configuration
+# ML-Based Liquidity and Trading-Risk Intelligence for Indian Equities
+# Total Audited Core Features: 55 (F01 to F55)
+
+feature_pipeline:
+  warmup_window_trading_days: 80
+  output_dtype: "float32"
+  cross_sectional_percentile_calibration: "training_set_distribution"
+
+categories:
+  returns_and_price_behaviour:
+    enabled: true
+    count: 10
+    features:
+      - id: "F01"
+        name: "daily_return"
+        lookback: 1
+      - id: "F02"
+        name: "log_return"
+        lookback: 1
+      - id: "F03"
+        name: "return_5d"
+        lookback: 5
+      - id: "F04"
+        name: "return_20d"
+        lookback: 20
+      - id: "F05"
+        name: "return_60d"
+        lookback: 60
+      - id: "F06"
+        name: "return_z5"
+        lookback: 5
+      - id: "F07"
+        name: "return_z20"
+        lookback: 20
+      - id: "F08"
+        name: "abs_return"
+        lookback: 1
+      - id: "F09"
+        name: "price_rel_ma20"
+        lookback: 20
+      - id: "F10"
+        name: "price_rel_ma60"
+        lookback: 60
+
+  volatility_and_downside_risk:
+    enabled: true
+    count: 12
+    features:
+      - id: "F11"
+        name: "vol_5d"
+        lookback: 5
+      - id: "F12"
+        name: "vol_20d"
+        lookback: 20
+        annualized: true
+      - id: "F13"
+        name: "vol_60d"
+        lookback: 60
+        annualized: true
+      - id: "F14"
+        name: "vol_ratio_5_20"
+        lookback: 20
+      - id: "F15"
+        name: "parkinson_vol"
+        lookback: 20
+        annualized: true
+      - id: "F16"
+        name: "true_range"
+        lookback: 1
+      - id: "F17"
+        name: "atr_20d"
+        lookback: 20
+      - id: "F18"
+        name: "downside_vol_20d"
+        lookback: 20
+        annualized: true
+      - id: "F19"
+        name: "sortino_component"
+        lookback: 20
+      - id: "F20"
+        name: "max_drawdown_20d"
+        lookback: 20
+      - id: "F21"
+        name: "rsi_14"
+        lookback: 14
+      - id: "F22"
+        name: "vol_of_vol"
+        lookback: 80
+
+  liquidity_and_trading_activity:
+    enabled: true
+    count: 14
+    features:
+      - id: "F23"
+        name: "log_volume"
+        lookback: 1
+      - id: "F24"
+        name: "volume_ma20"
+        lookback: 20
+      - id: "F25"
+        name: "volume_ratio"
+        lookback: 20
+      - id: "F26"
+        name: "volume_z20"
+        lookback: 20
+      - id: "F27"
+        name: "amihud_ratio"
+        lookback: 1
+        scaling_factor: 1000000.0
+      - id: "F28"
+        name: "amihud_ma20"
+        lookback: 20
+      - id: "F29"
+        name: "amihud_z20"
+        lookback: 20
+      - id: "F30"
+        name: "turnover_value"
+        lookback: 1
+      - id: "F31"
+        name: "log_turnover"
+        lookback: 1
+      - id: "F32"
+        name: "turnover_ma20"
+        lookback: 20
+      - id: "F33"
+        name: "turnover_ratio"
+        lookback: 20
+      - id: "F34"
+        name: "zero_return_flag"
+        lookback: 1
+      - id: "F35"
+        name: "zero_vol_flag"
+        lookback: 1
+      - id: "F36"
+        name: "low_volume_streak"
+        lookback: 5
+
+  price_gap_and_price_impact:
+    enabled: true
+    count: 9
+    features:
+      - id: "F37"
+        name: "daily_range"
+        lookback: 1
+      - id: "F38"
+        name: "daily_range_ma20"
+        lookback: 20
+      - id: "F39"
+        name: "range_z20"
+        lookback: 20
+      - id: "F40"
+        name: "overnight_gap"
+        lookback: 1
+      - id: "F41"
+        name: "overnight_gap_abs"
+        lookback: 1
+      - id: "F42"
+        name: "gap_z20"
+        lookback: 20
+      - id: "F43"
+        name: "cs_spread_est"
+        lookback: 2
+        clip_lower: 0.0
+      - id: "F44"
+        name: "cs_spread_ma10"
+        lookback: 12
+      - id: "F45"
+        name: "intraday_return"
+        lookback: 1
+
+  market_relative_behaviour:
+    enabled: true
+    count: 6
+    benchmark_col: "nifty_close"
+    features:
+      - id: "F46"
+        name: "excess_return_1d"
+        lookback: 1
+      - id: "F47"
+        name: "excess_return_20d"
+        lookback: 20
+      - id: "F48"
+        name: "rolling_beta_60d"
+        lookback: 60
+      - id: "F49"
+        name: "rolling_corr_60d"
+        lookback: 60
+      - id: "F50"
+        name: "idiosyncratic_vol"
+        lookback: 80
+      - id: "F51"
+        name: "relative_volume"
+        lookback: 20
+
+  market_stress_and_correlation:
+    enabled: true
+    count: 5
+    features:
+      - id: "F52"
+        name: "nifty_vol_20d"
+        lookback: 20
+      - id: "F53"
+        name: "nifty_vol_ratio"
+        lookback: 20
+      - id: "F54"
+        name: "nifty_return_20d"
+        lookback: 20
+      - id: "F55"
+        name: "vol_beta"
+        lookback: 40
+
+supplementary_market_fear:
+  india_vix_features:
+    enabled: false  # to be enabled only if candidate ^INDIAVIX is verified with full coverage
+    status: "UNRESOLVED_PENDING_PHASE_1"
+    candidate_features:
+      - name: "vix_close"
+      - name: "vix_return_1d"
+      - name: "vix_z20"
+
+lrs_weights:
+  amihud_ma20_rank: 0.25
+  cs_spread_ma10_rank: 0.20
+  vol_20d_rank: 0.20
+  volume_drought_rank: 0.15
+  overnight_gap_abs_rank: 0.10
+  idiosyncratic_vol_rank: 0.10
+
+hre_target:
+  forward_window_days: 5
+  triggers:
+    amihud_ratio_cross_sectional_quantile: 0.95
+    volume_ratio_threshold: 0.20
+    overnight_gap_abs_threshold: 0.05
+    lrs_threshold: 75.0

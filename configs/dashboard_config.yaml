@@ -1,0 +1,55 @@
+# Dashboard Configuration
+# ML-Based Liquidity and Trading-Risk Intelligence for Indian Equities
+
+app:
+  title: "Liquidity & Trading-Risk Intelligence for Indian Equities"
+  layout: "wide"
+  default_theme: "dark"
+  staleness_warning_days: 2
+
+risk_bands:
+  low:
+    min: 0.0
+    max: 25.0
+    label: "LOW RISK"
+    color: "#28a745"
+  moderate:
+    min: 25.0
+    max: 50.0
+    label: "MODERATE RISK"
+    color: "#ffc107"
+  high:
+    min: 50.0
+    max: 75.0
+    label: "HIGH RISK"
+    color: "#fd7e14"
+  very_high:
+    min: 75.0
+    max: 100.0
+    label: "VERY HIGH RISK"
+    color: "#dc3545"
+
+pages:
+  overview:
+    name: "Market Overview"
+    top_k_high_risk: 15
+    show_segment_distribution: true
+  stock_detail:
+    name: "Stock Deep-Dive"
+    default_lookback_days: 252
+    show_anomaly_overlay: true
+  portfolio_risk:
+    name: "Portfolio Risk Aggregator"
+    max_tickers: 30
+    default_equal_weight: true
+  anomaly_log:
+    name: "Historical Anomaly Browser"
+    page_size: 50
+  data_quality:
+    name: "Pipeline Health & Data Quality"
+    show_manifest_history_days: 14
+
+disclaimers:
+  decision_support_only: "This tool is a decision-support system and does NOT constitute investment advice or automated trading execution."
+  survivorship_bias: "Historical data reflects survivor companies currently in Nifty 500 sub-indices. Delisted entities are omitted."
+  proxy_nature: "Liquidity metrics are academically cited proxies (Amihud, Corwin-Schultz) derived from daily OHLCV data."

@@ -1,0 +1,112 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# C extensions
+*.so
+
+# Distribution / packaging
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+share/python-wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+
+# Virtual Environments
+.env
+.venv
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
+
+# Environment Variables & Secrets
+.env.*
+!.env.example
+*.pem
+*.key
+*.cert
+*.pfx
+
+# Jupyter Notebook Checkpoints
+.ipynb_checkpoints/
+*-checkpoint.ipynb
+
+# IDE & Editor Settings
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+*.swp
+*.swo
+
+# Project Data Directories (DO NOT COMMIT RAW OR PROCESSED MARKET DATA)
+data/raw/*
+!data/raw/.gitkeep
+!data/raw/stocks/
+data/raw/stocks/*
+!data/raw/stocks/.gitkeep
+!data/raw/market/
+data/raw/market/*
+!data/raw/market/.gitkeep
+data/interim/*
+!data/interim/.gitkeep
+!data/interim/stocks/
+data/interim/stocks/*
+!data/interim/stocks/.gitkeep
+!data/interim/market/
+data/interim/market/*
+!data/interim/market/.gitkeep
+data/processed/*
+!data/processed/.gitkeep
+data/predictions/*
+!data/predictions/.gitkeep
+
+# Manifests and Events: allow metadata tracking but ignore temporary/large dumps
+# Track template and curated calendar in data/events
+data/events/*.tmp
+data/events/*.parquet
+
+# Model Artifacts (Binary weights / scalers)
+models/*.joblib
+models/*.pkl
+models/*.onnx
+!models/.gitkeep
+!models/model_registry.json
+
+# Runtime Logs
+logs/*.log
+!logs/.gitkeep
+
+# Temporary & Atomic Write Files
+*.tmp
+*.tmp.parquet
+
+# Reports Output (allow report figures and markdown to be tracked)
+# !reports/figures/*.png
+
+# OS generated files
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Testing & Coverage
+.pytest_cache/
+.coverage
+htmlcov/
+.tox/

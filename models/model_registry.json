@@ -1,0 +1,10 @@
+{
+  "registry_version": "1.0",
+  "last_updated": null,
+  "active_production_models": {
+    "supervised_classifier": null,
+    "feature_scaler": null,
+    "anomaly_detector": null
+  },
+  "models": []
+}

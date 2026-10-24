@@ -1,0 +1,72 @@
+# Pipeline Configuration
+# ML-Based Liquidity and Trading-Risk Intelligence for Indian Equities
+
+project:
+  name: "liquidity-risk-intelligence"
+  version: "1.0.0"
+  timezone: "Asia/Kolkata"
+
+paths:
+  universe_config: "configs/universe.json"
+  feature_config: "configs/feature_config.yaml"
+  model_config: "configs/model_config.yaml"
+  dashboard_config: "configs/dashboard_config.yaml"
+  data_raw: "data/raw"
+  data_raw_stocks: "data/raw/stocks"
+  data_raw_market: "data/raw/market"
+  data_interim: "data/interim"
+  data_interim_stocks: "data/interim/stocks"
+  data_interim_market: "data/interim/market"
+  interim_stock_ohlcv: "data/interim/stocks/ohlcv_clean.parquet"
+  interim_nifty50: "data/interim/market/nifty50_clean.parquet"
+  interim_banknifty: "data/interim/market/banknifty_clean.parquet"
+  interim_india_vix: "data/interim/market/india_vix_clean.parquet"
+  data_processed: "data/processed"
+  data_predictions: "data/predictions"
+  data_manifests: "data/manifests"
+  data_events: "data/events"
+  market_events_csv: "data/events/market_events.csv"
+  market_events_template_csv: "data/events/market_events_template.csv"
+  models_dir: "models"
+  logs_dir: "logs"
+  reports_dir: "reports"
+
+data_acquisition:
+  # Historical window: 2018-01-01 to latest available date
+  start_date: "2018-01-01"
+  end_date: null  # null defaults to current trading date
+  benchmark_ticker: "^NSEI"
+  bank_nifty_ticker: "^NSEBANK"
+  india_vix:
+    candidate_ticker: "^INDIAVIX"
+    enabled: true
+    status: "VERIFIED"
+    verify_coverage_min_pct: 0.90
+  yfinance:
+    auto_adjust: true
+    threads: false  # sequential execution to prevent 429 rate limiting
+    request_delay_seconds: 1.0
+    batch_size: 20
+    max_retries: 3
+    backoff_factor: 2.0
+    timeout_seconds: 30
+
+validation:
+  min_valid_trading_days: 200
+  stale_price_consecutive_days_threshold: 3
+  extreme_single_day_return_threshold: 0.50  # 50% single-day jump flagged as potential error
+  max_missing_fraction_per_stock: 0.15
+  deduplication_keys:
+    - "date"
+    - "ticker"
+
+hardware_constraints:
+  target_ram_mb: 5000
+  process_per_stock: true  # iterate stock-by-stock to minimize peak RAM
+  numeric_downcast_dtype: "float32"
+  warmup_window_rows: 80
+
+logging:
+  level: "INFO"
+  format: "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
+  file_prefix: "pipeline_"
