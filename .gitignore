@@ -55,38 +55,17 @@ venv.bak/
 *.swp
 *.swo
 
-# Project Data Directories (DO NOT COMMIT RAW OR PROCESSED MARKET DATA)
-data/raw/*
-!data/raw/.gitkeep
-!data/raw/stocks/
-data/raw/stocks/*
-!data/raw/stocks/.gitkeep
-!data/raw/market/
-data/raw/market/*
-!data/raw/market/.gitkeep
-data/interim/*
-!data/interim/.gitkeep
-!data/interim/stocks/
-data/interim/stocks/*
-!data/interim/stocks/.gitkeep
-!data/interim/market/
-data/interim/market/*
-!data/interim/market/.gitkeep
-data/processed/*
-!data/processed/.gitkeep
-data/predictions/*
-!data/predictions/.gitkeep
+# Project Data Directories & Artifacts
+# Datasets across data/raw/, data/interim/, data/processed/, data/predictions/,
+# data/manifests/, and data/events/ are eligible for tracking in Git.
 
-# Manifests and Events: allow metadata tracking but ignore temporary/large dumps
-# Track template and curated calendar in data/events
+# Manifests and Events: ignore temporary dumps but allow all datasets
 data/events/*.tmp
-data/events/*.parquet
 
 # Model Artifacts (Binary weights / scalers)
 models/*.joblib
 models/*.pkl
 models/*.onnx
-!models/.gitkeep
 !models/model_registry.json
 
 # Runtime Logs
